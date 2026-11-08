@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Plus, Bookmark } from "lucide-react";
-import {useParams, notFound} from "next/navigation";
 import { getOne } from "@/lib/api";
 import { usePlan, CAP } from "@/context/PlanContext";
 export default function Details() {
