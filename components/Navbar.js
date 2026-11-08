@@ -1,19 +1,47 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { usePlan } from "@/context/PlanContext";
 export default function Navbar() {
+  const path = usePathname();
+  const { plan, saved } = usePlan();
+  const link = (href, label) => (
+    <Link
+      href={href}
+      className={`px-3 py-1.5 text-sm font-semibold uppercase tracking-wide rounded ${path === href ? "bg-accent text-black" : "text-neutral-300 hover:text-white"}`}
+    >
+      {label}
+    </Link>
+  );
   return (
-    <nav className="flex items-center justify-between p-4 bg-gray-800">
-      <div className="flex items-center gap-2">
-        <img src="/logo.png" alt="FitLog Logo" className="h-8 w-8" />
-        <span className="font-bold">FITLOG</span>
-      </div>
-      <div className="flex gap-4">
-        <Link href="/">Workouts</Link>
-        <Link href="/my-plan">My Plan</Link>
-      </div>
-      <div className="flex gap-2"> 
-            <Link href="/my-plan" className="border border-[#ccff00] rounded-full px-3 py-1 text-sm font-bold">Plan 0</Link>
-            <Link href="/save-badges" className="border border-[#ccff00] rounded-full px-3 py-1 text-sm font-bold">Saved 0</Link>
-      </div>
-    </nav>
+    <header className="sticky top-0 z-40 bg-black/90 backdrop-blur border-b border-line">
+      <nav className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-2">
+        <Link
+          href="/"
+          className="flex items-center gap-2 font-display text-xl tracking-wide"
+        >
+          <img src="/logo.png" alt="FitLog logo" className="w-8 h-8 rounded" />
+          <span className="hidden sm:inline">FITLOG</span>
+        </Link>
+        <div className="flex gap-1">
+          {link("/", "Workout")}
+          {link("/my-plan", "My Plan")}
+        </div>
+        <div className="flex gap-2 text-xs font-bold">
+          <Link
+            href="/my-plan"
+            className="px-3 py-1 rounded-full bg-accent text-black"
+          >
+            Plan {plan.length}
+          </Link>
+          <Link
+            href="/my-plan"
+            className="px-3 py-1 rounded-full border border-accent text-accent"
+          >
+            Saved {saved.length}
+          </Link>
+        </div>
+      </nav>
+    </header>
   );
 }
