@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Plus, Bookmark } from "lucide-react";
-import NotFound from "@/app/not-found";
+import {useParams, notFound} from "next/navigation";
 import { getOne } from "@/lib/api";
 import { usePlan, CAP } from "@/context/PlanContext";
 export default function Details() {
@@ -26,7 +26,7 @@ export default function Details() {
         <div className="w-12 h-12 border-4 border-line border-t-accent rounded-full animate-spin" />
       </div>
     );
-  if (state === "missing") return <NotFound />;
+  if(state==="missing")notFound();
   const full = plan.length >= CAP && !plan.some((p) => p.id === w.id);
   const specs = [
     ["Equipment", w.equipment],
